@@ -16,5 +16,5 @@ package com.myretail.api;
  */
 public interface MyRetailAPI {
 
-  public ProductAPIResult getProduct(Integer id);
+  public ProductAPIResult getProduct(Integer id) throws Exception;
 }

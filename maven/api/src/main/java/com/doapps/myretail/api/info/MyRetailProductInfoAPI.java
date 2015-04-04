@@ -29,4 +29,6 @@ public interface MyRetailProductInfoAPI {
       @Query("id_type") String idType,
       @Query("key") String key);
 
+  @GET("/products/v3/{id}?fields=descriptions&id_type=TCIN&key=43cJWpLjH8Z8oR18KdrZDBKAgLLQKJjz")
+  public ProductInfo getProductInfo(@Path("id") Integer id);
 }

@@ -22,8 +22,11 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import retrofit.RestAdapter;
+import com.doapps.myretail.api.info.MyRetailProductInfoAPI;
 import com.myretail.api.MyRetailAPI;
-import com.myretail.api.ProductAPIResult;
+import com.myretail.api.MyRetailAPIInstance;
+import com.myretail.api.pricing.MyRetailPricingAPI;
 import com.myretail.api.pricing.PricingData;
 import com.myretail.api.resource.ProductsResource;
 
@@ -60,13 +63,30 @@ public class MyRetailAPIApplication extends Application<MyRetailAPIConfiguration
   }
 
   private MyRetailAPI getApi() {
-    return new MyRetailAPI() {
+    return new MyRetailAPIInstance(getInfoAPI(), getPricingAPI());
+  }
 
+  /**
+   * @return
+   */
+  private MyRetailPricingAPI getPricingAPI() {
+    return new MyRetailPricingAPI() {
       @Override
-      public ProductAPIResult getProduct(Integer id) {
-        return new ProductAPIResult(id, "The Big Lebowski (Blu-ray) (Widescreen)", new PricingData(new BigDecimal(13.49), "USD"));
+      public PricingData getPricingData(Integer productId) {
+        return new PricingData(new BigDecimal(13.49), "USD");
       }
     };
+  }
+
+  /**
+   * @return
+   */
+  private MyRetailProductInfoAPI getInfoAPI() {
+    RestAdapter restAdapter = new RestAdapter.Builder()
+        .setEndpoint("https://api.target.com")
+        .build();
+    MyRetailProductInfoAPI infoAPI = restAdapter.create(MyRetailProductInfoAPI.class);
+    return infoAPI;
   }
 
   /*
