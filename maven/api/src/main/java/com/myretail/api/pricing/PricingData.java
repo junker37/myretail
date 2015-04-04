@@ -10,6 +10,8 @@
  */
 package com.myretail.api.pricing;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import java.math.BigDecimal;
 import com.google.common.base.MoreObjects;
 
 
@@ -18,12 +20,17 @@ import com.google.common.base.MoreObjects;
  *
  */
 public class PricingData {
-  public final Float value;
+  public final BigDecimal value;
   public final String currencyCode;
 
   private PricingData() {
     this.value = null;
     this.currencyCode = null;
+  }
+
+  public PricingData(BigDecimal value, String currencyCode) {
+    this.value = checkNotNull(value);
+    this.currencyCode = checkNotNull(currencyCode);
   }
 
   /*

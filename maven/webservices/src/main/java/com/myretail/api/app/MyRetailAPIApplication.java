@@ -14,6 +14,7 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration.Dynamic;
@@ -21,6 +22,9 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import com.myretail.api.MyRetailAPI;
+import com.myretail.api.ProductAPIResult;
+import com.myretail.api.pricing.PricingData;
 import com.myretail.api.resource.ProductsResource;
 
 
@@ -55,6 +59,16 @@ public class MyRetailAPIApplication extends Application<MyRetailAPIConfiguration
     }
   }
 
+  private MyRetailAPI getApi() {
+    return new MyRetailAPI() {
+
+      @Override
+      public ProductAPIResult getProduct(Integer id) {
+        return new ProductAPIResult(id, "The Big Lebowski (Blu-ray) (Widescreen)", new PricingData(new BigDecimal(13.49), "USD"));
+      }
+    };
+  }
+
   /*
    * (non-Javadoc)
    * 
@@ -62,7 +76,7 @@ public class MyRetailAPIApplication extends Application<MyRetailAPIConfiguration
    */
   @Override
   public void run(MyRetailAPIConfiguration configuration, Environment environment) throws Exception {
-    environment.jersey().register(new ProductsResource());
+    environment.jersey().register(new ProductsResource(getApi()));
 
     // environment.jersey().getResourceConfig().register(CacheControlFilter.class);
 
