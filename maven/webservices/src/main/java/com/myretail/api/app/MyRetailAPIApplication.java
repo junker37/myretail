@@ -24,6 +24,7 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import retrofit.RestAdapter;
 import com.doapps.myretail.api.info.MyRetailProductInfoAPI;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.myretail.api.MyRetailAPI;
 import com.myretail.api.MyRetailAPIInstance;
 import com.myretail.api.pricing.MyRetailPricingAPI;
@@ -97,6 +98,7 @@ public class MyRetailAPIApplication extends Application<MyRetailAPIConfiguration
   @Override
   public void run(MyRetailAPIConfiguration configuration, Environment environment) throws Exception {
     environment.jersey().register(new ProductsResource(getApi()));
+    environment.getObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 
     // environment.jersey().getResourceConfig().register(CacheControlFilter.class);
 
