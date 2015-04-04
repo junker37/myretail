@@ -10,11 +10,23 @@
  */
 package com.doapps.myretail.api.info;
 
+import retrofit.http.GET;
+import retrofit.http.Path;
+import retrofit.http.Query;
+
+
 /**
  * @author jeremy
  *
  */
 public interface MyRetailProductInfoAPI {
 
-  public ProductInfo getProductInfo(Integer productId);
+  @GET("/products/v{version}/{id}")
+  public ProductInfo getProductInfo(
+      @Path("version") Integer version,
+      @Path("id") Integer id,
+      @Query("fields") String fields,
+      @Query("id_type") String idType,
+      @Query("key") String key);
+
 }
