@@ -21,6 +21,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import com.myretail.api.resource.ProductsResource;
 
 
 /**
@@ -61,7 +62,7 @@ public class MyRetailAPIApplication extends Application<MyRetailAPIConfiguration
    */
   @Override
   public void run(MyRetailAPIConfiguration configuration, Environment environment) throws Exception {
-    // environment.jersey().register(new TagsResource(configuration, s3, metrics));
+    environment.jersey().register(new ProductsResource());
 
     // environment.jersey().getResourceConfig().register(CacheControlFilter.class);
 
