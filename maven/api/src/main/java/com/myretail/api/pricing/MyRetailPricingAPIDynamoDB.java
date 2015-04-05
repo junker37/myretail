@@ -52,12 +52,17 @@ public class MyRetailPricingAPIDynamoDB implements MyRetailPricingAPI {
     AttributeValue valueAttribute = item.get(VALUE);
     if (valueAttribute != null) {
       value = new BigDecimal(valueAttribute.getN());
+    } else {
+      return null;
     }
     String currencyCode = null;
     AttributeValue currencyCodeAttribute = item.get(CURRENCY_CODE);
     if (currencyCodeAttribute != null) {
       currencyCode = currencyCodeAttribute.getS();
+    } else {
+      return null;
     }
+    // require both value and currency code to create pricing data
     return new PricingData(value, currencyCode);
   }
 
