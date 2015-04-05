@@ -14,7 +14,6 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration.Dynamic;
@@ -23,12 +22,16 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import retrofit.RestAdapter;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.doapps.myretail.api.info.MyRetailProductInfoAPI;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.myretail.api.MyRetailAPI;
 import com.myretail.api.MyRetailAPIInstance;
 import com.myretail.api.pricing.MyRetailPricingAPI;
-import com.myretail.api.pricing.PricingData;
+import com.myretail.api.pricing.MyRetailPricingAPIDynamoDB;
 import com.myretail.api.resource.ProductsResource;
 
 
@@ -71,12 +74,18 @@ public class MyRetailAPIApplication extends Application<MyRetailAPIConfiguration
    * @return
    */
   private MyRetailPricingAPI getPricingAPI() {
-    return new MyRetailPricingAPI() {
-      @Override
-      public PricingData getPricingData(Integer productId) {
-        return new PricingData(new BigDecimal(13.49), "USD");
-      }
-    };
+    return new MyRetailPricingAPIDynamoDB(getDynamoDB());
+  }
+
+  /**
+   * @return
+   */
+  private AmazonDynamoDBClient getDynamoDB() {
+    // it fails if it can't find credentials, so just using dummy (db file is created with name of accessKey) basic credentials since we're using a local db file
+    AmazonDynamoDBClient dynamoDB = new AmazonDynamoDBClient(new BasicAWSCredentials("myRetail", ""));
+    dynamoDB.setRegion(Region.getRegion(Regions.US_EAST_1));
+    dynamoDB.setEndpoint("http://localhost:8000");
+    return dynamoDB;
   }
 
   /**
