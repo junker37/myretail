@@ -26,7 +26,7 @@ public class ProductAPIResult {
 
   public ProductAPIResult(Integer id, String name, PricingData pricingData) {
     this.id = checkNotNull(id);
-    this.name = checkNotNull(name);
+    this.name = name;
     this.currentPrice = checkNotNull(pricingData);
   }
 

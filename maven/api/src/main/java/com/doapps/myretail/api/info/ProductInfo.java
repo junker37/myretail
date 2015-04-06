@@ -11,6 +11,8 @@
 package com.doapps.myretail.api.info;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -25,8 +27,23 @@ public class ProductInfo extends HashMap<String, Object> {
    * 
    * @return
    */
+  @SuppressWarnings("unchecked")
   public String getName() {
-    return "The Big Lebowski (Blu-ray) (Widescreen)";
+    Map<String, Object> productCompositeResponse = (Map<String, Object>) get("product_composite_response");
+    if (productCompositeResponse != null) {
+      List<Map<String, Object>> items = (List<Map<String, Object>>) productCompositeResponse.get("items");
+      if ((items != null) && (items.size() > 0)) {
+        // assuming items is a list of size 1, not caring if it's more though, just use first item
+        Map<String, Object> item = items.get(0);
+        Map<String, Object> onlineDescription = (Map<String, Object>) item.get("online_description");
+        if (onlineDescription != null) {
+          if (onlineDescription.containsKey("value")) {
+            return (String) onlineDescription.get("value");
+          }
+        }
+      }
+    }
+    return null;
   }
 
 }
