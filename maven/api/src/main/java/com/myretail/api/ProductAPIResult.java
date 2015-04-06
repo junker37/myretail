@@ -17,7 +17,8 @@ import com.myretail.api.pricing.PricingData;
 
 /**
  * @author jeremy
- *
+ * 
+ *         Example {"id":13860428,"name":"The Big Lebowski (Blu-ray) (Widescreen)","current_price":{"value":13.49,"currency_code":"USD"}}
  */
 public class ProductAPIResult {
   public final Integer id;

@@ -34,6 +34,7 @@ import com.myretail.api.pricing.MyRetailPricingAPIDynamoDB;
 /**
  * @author jeremy
  *
+ *         Used to create the AWS DynamoDB product pricing table and populate it with some data
  */
 public class InitializeDynamoDB {
 

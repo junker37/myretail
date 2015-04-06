@@ -21,6 +21,8 @@ import com.amazonaws.services.dynamodbv2.model.GetItemResult;
 
 
 /**
+ * AWS DynamoDB implemntation of the PricingAPI
+ * 
  * @author jeremy
  *
  */

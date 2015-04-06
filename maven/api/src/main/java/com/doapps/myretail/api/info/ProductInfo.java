@@ -16,6 +16,8 @@ import java.util.Map;
 
 
 /**
+ * Just extending HashMap so I don't have to model all of data from the info api
+ * 
  * @author jeremy
  *
  */

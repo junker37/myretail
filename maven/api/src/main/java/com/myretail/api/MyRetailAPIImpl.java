@@ -25,15 +25,17 @@ import com.myretail.api.pricing.PricingData;
 
 
 /**
+ * Implentation of the MyRetailAPI
+ * 
  * @author jeremy
  *
  */
-public class MyRetailAPIInstance implements MyRetailAPI {
+public class MyRetailAPIImpl implements MyRetailAPI {
   private final MyRetailProductInfoAPI infoAPI;
   private final MyRetailPricingAPI pricingAPI;
   private final ExecutorService executor = Executors.newFixedThreadPool(2, new ThreadFactoryBuilder().setNameFormat("MyRetailAPI %d").build());
 
-  public MyRetailAPIInstance(MyRetailProductInfoAPI infoAPI, MyRetailPricingAPI pricingAPI) {
+  public MyRetailAPIImpl(MyRetailProductInfoAPI infoAPI, MyRetailPricingAPI pricingAPI) {
     this.infoAPI = checkNotNull(infoAPI);
     this.pricingAPI = checkNotNull(pricingAPI);
   }

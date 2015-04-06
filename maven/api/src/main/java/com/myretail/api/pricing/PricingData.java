@@ -23,11 +23,6 @@ public class PricingData {
   public final BigDecimal value;
   public final String currencyCode;
 
-  private PricingData() {
-    this.value = null;
-    this.currencyCode = null;
-  }
-
   public PricingData(BigDecimal value, String currencyCode) {
     this.value = checkNotNull(value);
     this.currencyCode = checkNotNull(currencyCode);

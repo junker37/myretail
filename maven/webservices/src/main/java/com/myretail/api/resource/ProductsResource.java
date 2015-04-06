@@ -34,6 +34,11 @@ public class ProductsResource {
     this.api = checkNotNull(api);
   }
 
+  /**
+   * 
+   * @param id the product id
+   * @return {"id":13860428,"name":"The Big Lebowski (Blu-ray) (Widescreen)","current_price":{"value":13.49,"currency_code":"USD"}}
+   */
   @GET
   @Path("{id}")
   public ProductAPIResult getProduct(@PathParam("id") Integer id) {

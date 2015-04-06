@@ -16,5 +16,10 @@ package com.myretail.api.pricing;
  */
 public interface MyRetailPricingAPI {
 
+  /**
+   * 
+   * @param productId the product id
+   * @return the pricing data for the product
+   */
   public PricingData getPricingData(Integer productId);
 }

@@ -16,8 +16,7 @@ import com.doapps.myretail.api.info.ProductInfo;
 
 
 /**
- * @author jeremy
- *
+ * @author jeremy Just used to test RestAdapter
  */
 public class TestMyRetailProductInfoAPI {
 
