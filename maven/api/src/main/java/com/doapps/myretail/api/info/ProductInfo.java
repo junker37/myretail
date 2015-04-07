@@ -27,7 +27,7 @@ public class ProductInfo extends HashMap<String, Object> {
   /**
    * assumptions - the product info is the first item in the items array
    * 
-   * @return
+   * @return the name of the product
    */
   @SuppressWarnings("unchecked")
   public String getName() {
