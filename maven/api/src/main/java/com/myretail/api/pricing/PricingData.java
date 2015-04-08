@@ -24,8 +24,8 @@ public class PricingData {
   public final String currencyCode;
 
   public PricingData(BigDecimal value, String currencyCode) {
-    this.value = checkNotNull(value);
-    this.currencyCode = checkNotNull(currencyCode);
+    this.value = checkNotNull(value, "Value is null");
+    this.currencyCode = checkNotNull(currencyCode, "Currency code is null");
   }
 
   /*
