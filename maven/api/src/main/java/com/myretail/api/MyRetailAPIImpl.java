@@ -36,8 +36,8 @@ public class MyRetailAPIImpl implements MyRetailAPI {
   private final ExecutorService executor = Executors.newFixedThreadPool(2, new ThreadFactoryBuilder().setNameFormat("MyRetailAPI %d").build());
 
   public MyRetailAPIImpl(MyRetailProductInfoAPI infoAPI, MyRetailPricingAPI pricingAPI) {
-    this.infoAPI = checkNotNull(infoAPI);
-    this.pricingAPI = checkNotNull(pricingAPI);
+    this.infoAPI = checkNotNull(infoAPI, "ProductInfo API is null");
+    this.pricingAPI = checkNotNull(pricingAPI, "Pricing API is null");
   }
 
   /*
@@ -46,7 +46,7 @@ public class MyRetailAPIImpl implements MyRetailAPI {
    * @see com.myretail.api.MyRetailAPI#getProduct(java.lang.Integer)
    */
   public ProductAPIResult getProduct(Integer id) throws Exception {
-    checkNotNull(id);
+    checkNotNull(id, "Product id is null");
     CountDownLatch latch = new CountDownLatch(2);
 
     Future<PricingData> pricingData = executor.submit((Callable<PricingData>) () -> {

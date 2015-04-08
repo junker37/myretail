@@ -38,4 +38,24 @@ public class PricingData {
     return MoreObjects.toStringHelper(this).add("value", value).add("code", currencyCode).toString();
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    PricingData other = (PricingData) obj;
+    if (currencyCode == null) {
+      if (other.currencyCode != null) return false;
+    } else if (!currencyCode.equals(other.currencyCode)) return false;
+    if (value == null) {
+      if (other.value != null) return false;
+    } else if (!value.equals(other.value)) return false;
+    return true;
+  }
+
 }
