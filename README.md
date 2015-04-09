@@ -19,7 +19,7 @@ mvn clean package
 ```
 cd maven
 mvn clean package
-java -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
+java -Daws.dynamodb.endpoint=http://localhost:8000 -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
 ```
 
 ## Interacting
@@ -33,7 +33,7 @@ Start webserver
 ```
 cd maven
 mvn clean package
-java -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
+java -Daws.dynamodb.endpoint=http://localhost:8000 -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
 ```
 Open a browser to http://localhost:8080/products/v1/13860428 or, use curl
 ```

@@ -60,10 +60,16 @@ public class MyRetailAPIApplication extends Application<MyRetailAPIConfiguration
    * @return
    */
   private AmazonDynamoDBClient getDynamoDB() {
+    String accessKey = System.getProperty("aws.accessKey", "myRetail");
+    String secretKey = System.getProperty("aws.secretKey", "");
+    String region = System.getProperty("aws.region", "us-east-1");
     // it fails if it can't find credentials, so just using dummy (db file is created with name of accessKey) basic credentials since we're using a local db file
-    AmazonDynamoDBClient dynamoDB = new AmazonDynamoDBClient(new BasicAWSCredentials("myRetail", ""));
-    dynamoDB.setRegion(Region.getRegion(Regions.US_EAST_1));
-    dynamoDB.setEndpoint("http://localhost:8000");
+    AmazonDynamoDBClient dynamoDB = new AmazonDynamoDBClient(new BasicAWSCredentials(accessKey, secretKey));
+    dynamoDB.setRegion(Region.getRegion(Regions.fromName(region)));
+    String endpoint = System.getProperty("aws.dynamodb.endpoint", null);
+    if (endpoint != null) {
+      dynamoDB.setEndpoint(endpoint);
+    }
     return dynamoDB;
   }
 
