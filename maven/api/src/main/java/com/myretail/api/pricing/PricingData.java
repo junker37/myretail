@@ -23,6 +23,14 @@ public class PricingData {
   public final BigDecimal value;
   public final String currencyCode;
 
+  /*
+   * this private constructor is needed so that the json serializer can create the object
+   */
+  private PricingData() {
+    this.value = null;
+    this.currencyCode = null;
+  }
+
   public PricingData(BigDecimal value, String currencyCode) {
     this.value = checkNotNull(value, "Value is null");
     this.currencyCode = checkNotNull(currencyCode, "Currency code is null");

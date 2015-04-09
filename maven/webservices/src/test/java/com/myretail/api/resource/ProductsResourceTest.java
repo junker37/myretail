@@ -53,6 +53,9 @@ public class ProductsResourceTest {
       public ProductAPIResult getProduct(Integer id) throws Exception {
         return new ProductAPIResult(id, "ProductsResourceTest Product Name", new PricingData(new BigDecimal(5.67), "USD"));
       }
+
+      @Override
+      public void updatePricingData(Integer id, PricingData pricingData) throws Exception {}
     };
   }
 
@@ -82,5 +85,24 @@ public class ProductsResourceTest {
     ProductAPIResult actual = new ProductsResource(dummyMyRetailAPI).getProduct(1);
     ProductAPIResult expected = new ProductAPIResult(1, "ProductsResourceTest Product Name", new PricingData(new BigDecimal(5.67), "USD"));
     Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testUpdatePricingDataExceptions() {
+    try {
+      new ProductsResource(dummyMyRetailAPI).updatePricingData(null, null);
+    } catch (WebServiceException e) {
+      Assert.assertEquals("Product id is null", e.getCause().getMessage());
+    }
+    try {
+      new ProductsResource(dummyMyRetailAPI).updatePricingData(1, null);
+    } catch (WebServiceException e) {
+      Assert.assertEquals("Pricing data is null", e.getCause().getMessage());
+    }
+  }
+
+  @Test
+  public void testUpdatePricingData() {
+    new ProductsResource(dummyMyRetailAPI).updatePricingData(1, new PricingData(new BigDecimal(34.56), "PES"));
   }
 }

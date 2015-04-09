@@ -69,4 +69,14 @@ public class MyRetailAPIImpl implements MyRetailAPI {
     }
     return new ProductAPIResult(id, productInfo.get().getName(), pricingData.get());
   }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.myretail.api.MyRetailAPI#updatePricingData(java.lang.Integer, com.myretail.api.pricing.PricingData)
+   */
+  @Override
+  public void updatePricingData(Integer id, PricingData pricingData) throws Exception {
+    pricingAPI.updatePricingData(id, pricingData);
+  }
 }

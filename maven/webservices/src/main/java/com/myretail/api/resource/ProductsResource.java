@@ -11,7 +11,9 @@
 package com.myretail.api.resource;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -19,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.ws.WebServiceException;
 import com.myretail.api.MyRetailAPI;
 import com.myretail.api.ProductAPIResult;
+import com.myretail.api.pricing.PricingData;
 
 
 /**
@@ -27,6 +30,7 @@ import com.myretail.api.ProductAPIResult;
  */
 @Path("/products/v{version}")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ProductsResource {
   private final MyRetailAPI api;
 
@@ -44,6 +48,16 @@ public class ProductsResource {
   public ProductAPIResult getProduct(@PathParam("id") Integer id) {
     try {
       return api.getProduct(checkNotNull(id, "Product id is null"));
+    } catch (Throwable t) {
+      throw new WebServiceException(t);
+    }
+  }
+
+  @PUT
+  @Path("{id}")
+  public void updatePricingData(@PathParam("id") Integer id, PricingData pricingData) {
+    try {
+      api.updatePricingData(checkNotNull(id, "Product id is null"), checkNotNull(pricingData, "Pricing data is null"));
     } catch (Throwable t) {
       throw new WebServiceException(t);
     }

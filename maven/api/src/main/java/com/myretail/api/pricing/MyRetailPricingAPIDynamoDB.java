@@ -15,9 +15,12 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
 import com.amazonaws.services.dynamodbv2.model.GetItemResult;
+import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 
 
 /**
@@ -86,7 +89,14 @@ public class MyRetailPricingAPIDynamoDB implements MyRetailPricingAPI {
    */
   @Override
   public void updatePricingData(Integer productId, PricingData pricingData) {
-
+    checkNotNull(productId, "Product id is null");
+    checkNotNull(pricingData, "PricingData is null");
+    Map<String, AttributeValue> key = new HashMap<>();
+    key.put(PRODUCT_ID, new AttributeValue().withN(productId.toString()));
+    Map<String, AttributeValueUpdate> attrUpdates = new HashMap<>();
+    attrUpdates.put(VALUE, new AttributeValueUpdate(new AttributeValue().withN(pricingData.value.toString()), AttributeAction.PUT));
+    attrUpdates.put(CURRENCY_CODE, new AttributeValueUpdate(new AttributeValue().withS(pricingData.currencyCode), AttributeAction.PUT));
+    UpdateItemRequest updateItemRequest = new UpdateItemRequest(TABLE_NAME, key, attrUpdates);
+    dynamoDB.updateItem(updateItemRequest);
   }
-
 }

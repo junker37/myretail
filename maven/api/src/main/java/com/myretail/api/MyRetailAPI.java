@@ -10,6 +10,9 @@
  */
 package com.myretail.api;
 
+import com.myretail.api.pricing.PricingData;
+
+
 /**
  * @author jeremy
  *
@@ -23,4 +26,12 @@ public interface MyRetailAPI {
    * @throws Exception if an error occurs
    */
   public ProductAPIResult getProduct(Integer id) throws Exception;
+
+  /**
+   * 
+   * @param id the product id
+   * @Param pricingData the updated pricing data
+   * @throws Exception if an error occurs
+   */
+  public void updatePricingData(Integer id, PricingData pricingData) throws Exception;
 }
