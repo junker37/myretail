@@ -59,4 +59,28 @@ This code uses Cassandra to store the pricing data.
 Start cassandra
 ```
 cd apache-cassandra-2.0.14/
+bin/cassandra -f
+```
+Start webserver
+```
+cd maven
+mvn clean package
+java -Dpricing.api.classname=com.myretail.api.pricing.MyRetailPricingAPICassandra -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
+```
+Open a browser to http://localhost:8080/products/v1/13860428 or, use curl
+```
+curl http://localhost:8080/products/v1/13860428
+```
+Output
+```
+{"id":13860428,"name":"The Big Lebowski (Blu-ray) (Widescreen)","current_price":{"value":13.49,"currency_code":"USD"}}
+```
+### Updating Pricing Data
+```
+curl -H "Content-Type: application/json" -X PUT -d '{"value":12.99,"currency_code":"USD"}' http://localhost:8080/products/v1/13860428
+curl http://localhost:8080/products/v1/13860428
+```
+Output
+```
+{"id":13860428,"name":"The Big Lebowski (Blu-ray) (Widescreen)","current_price":{"value":12.99,"currency_code":"USD"}}
 ```
