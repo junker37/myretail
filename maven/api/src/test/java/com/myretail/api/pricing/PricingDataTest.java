@@ -63,4 +63,12 @@ public class PricingDataTest {
     }
   }
 
+  @Test
+  public void testEquals() {
+    PricingData expected = new PricingData(new BigDecimal(2.81), "USD");
+    Assert.assertFalse(expected.equals(null));
+    Assert.assertFalse(expected.equals(new PricingData(new BigDecimal(2.82), "USD")));
+    Assert.assertFalse(expected.equals(new PricingData(new BigDecimal(2.81), "NA")));
+    Assert.assertTrue(expected.equals(new PricingData(new BigDecimal(2.81), "USD")));
+  }
 }
