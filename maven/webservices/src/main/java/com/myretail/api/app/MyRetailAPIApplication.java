@@ -10,6 +10,7 @@
  */
 package com.myretail.api.app;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -26,6 +27,7 @@ import com.myretail.api.MyRetailAPI;
 import com.myretail.api.MyRetailAPIImpl;
 import com.myretail.api.pricing.MyRetailPricingAPI;
 import com.myretail.api.pricing.MyRetailPricingAPICassandra;
+import com.myretail.api.pricing.MyRetailPricingAPIDynamoDB;
 import com.myretail.api.resource.ProductsResource;
 
 
@@ -55,8 +57,19 @@ public class MyRetailAPIApplication extends Application<MyRetailAPIConfiguration
    * @return
    */
   private MyRetailPricingAPI getPricingAPI() {
-    return new MyRetailPricingAPICassandra(getCassandraSession());
-    // return new MyRetailPricingAPIDynamoDB(getDynamoDB());
+    // TODO: dynamically load via class name
+    String pricingAPI = checkNotNull(System.getProperty("pricing.api.classname", null), "pricing.api.classname not specified");
+    switch (pricingAPI) {
+      case "com.myretail.api.pricing.MyRetailPricingAPICassandra": {
+        return new MyRetailPricingAPICassandra(getCassandraSession());
+      }
+      case "com.myretail.api.pricing.MyRetailPricingAPIDynamoDB": {
+        return new MyRetailPricingAPIDynamoDB(getDynamoDB());
+      }
+      default: {
+        throw new RuntimeException("Invalid pricing API classname: " + pricingAPI);
+      }
+    }
   }
 
   private Session getCassandraSession() {

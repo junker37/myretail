@@ -22,8 +22,8 @@ mvn clean package
 java -Daws.dynamodb.endpoint=http://localhost:8000 -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
 ```
 
-## Interacting
-This code uses DynamoDB as a key value store and comes packaged with [local DynamoDB](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html) with some data already in the store.
+## Interacting Using DynamoDB
+This code uses DynamoDB as a NoSQL store and comes packaged with [local DynamoDB](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html) with some data already in the store.
 Start local DynamoDB server
 ```
 cd dynamodb-local
@@ -33,7 +33,7 @@ Start webserver
 ```
 cd maven
 mvn clean package
-java -Daws.dynamodb.endpoint=http://localhost:8000 -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
+java -Dpricing.api.classname=com.myretail.api.pricing.MyRetailPricingAPIDynamoDB -Daws.dynamodb.endpoint=http://localhost:8000 -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
 ```
 Open a browser to http://localhost:8080/products/v1/13860428 or, use curl
 ```
@@ -52,4 +52,11 @@ curl http://localhost:8080/products/v1/13860428
 Output
 ```
 {"id":13860428,"name":"The Big Lebowski (Blu-ray) (Widescreen)","current_price":{"value":12.99,"currency_code":"USD"}}
+```
+
+## Interacting Using Cassandra
+This code uses Cassandra to store the pricing data.
+Start cassandra
+```
+cd apache-cassandra-2.0.14/
 ```
