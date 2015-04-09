@@ -10,12 +10,14 @@
  */
 package com.myretail.api;
 
+import java.math.BigDecimal;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import com.myretail.api.pricing.PricingData;
 
 
 /**
@@ -62,4 +64,14 @@ public class ProductAPIResultTest {
     }
   }
 
+  @Test
+  public void testEquals() {
+    ProductAPIResult expected = new ProductAPIResult(1, "Name", new PricingData(new BigDecimal(3.45), "USD"));
+    Assert.assertFalse(expected.equals(null));
+    Assert.assertFalse(expected.equals(new ProductAPIResult(2, "Name", new PricingData(new BigDecimal(3.45), "USD"))));
+    Assert.assertFalse(expected.equals(new ProductAPIResult(1, "Different Name", new PricingData(new BigDecimal(3.45), "USD"))));
+    Assert.assertFalse(expected.equals(new ProductAPIResult(1, "Name", new PricingData(new BigDecimal(3.46), "USD"))));
+    Assert.assertFalse(expected.equals(new ProductAPIResult(1, "Name", new PricingData(new BigDecimal(3.45), "NA"))));
+    Assert.assertTrue(expected.equals(new ProductAPIResult(1, "Name", new PricingData(new BigDecimal(3.45), "USD"))));
+  }
 }
