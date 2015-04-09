@@ -32,6 +32,8 @@ public class InitializeCassandra {
     for (Row row : resultSet) {
       System.out.println(String.format("%-30s\t%-20s\t%-20s", row.getInt("id"), row.getDecimal("value"), row.getString("currency_code")));
     }
+    session.close();
+    cluster.close();
   }
 
 }
