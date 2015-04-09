@@ -47,6 +47,11 @@ public class MyRetailPricingAPIDynamoDB implements MyRetailPricingAPI {
     return dynamoDB.getItem(getItemRequest);
   }
 
+  /**
+   * 
+   * @param productId the product id
+   * @return null unless we find the item and it contains the value AND currency code
+   */
   private PricingData readPricingData(Integer productId) {
     GetItemResult result = queryForPricingData(productId);
     Map<String, AttributeValue> item = result.getItem();

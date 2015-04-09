@@ -18,12 +18,14 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Session;
 import com.doapps.myretail.api.info.MyRetailProductInfoAPI;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.myretail.api.MyRetailAPI;
 import com.myretail.api.MyRetailAPIImpl;
 import com.myretail.api.pricing.MyRetailPricingAPI;
-import com.myretail.api.pricing.MyRetailPricingAPIDynamoDB;
+import com.myretail.api.pricing.MyRetailPricingAPICassandra;
 import com.myretail.api.resource.ProductsResource;
 
 
@@ -53,7 +55,14 @@ public class MyRetailAPIApplication extends Application<MyRetailAPIConfiguration
    * @return
    */
   private MyRetailPricingAPI getPricingAPI() {
-    return new MyRetailPricingAPIDynamoDB(getDynamoDB());
+    return new MyRetailPricingAPICassandra(getCassandraSession());
+    // return new MyRetailPricingAPIDynamoDB(getDynamoDB());
+  }
+
+  private Session getCassandraSession() {
+    String ip = System.getProperty("cassandra.ip", "127.0.0.1");
+    Cluster cluster = Cluster.builder().addContactPoint(ip).build();
+    return cluster.connect();
   }
 
   /**

@@ -11,6 +11,9 @@
 package com.myretail.api.pricing;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import java.math.BigDecimal;
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 
 
@@ -19,6 +22,10 @@ import com.datastax.driver.core.Session;
  *
  */
 public class MyRetailPricingAPICassandra implements MyRetailPricingAPI {
+  public static final String ID = "id";
+  public static final String VALUE = "value";
+  public static final String CURRENCY_CODE = "currency_code";
+
   private final Session session;
 
   public MyRetailPricingAPICassandra(Session session) {
@@ -32,7 +39,18 @@ public class MyRetailPricingAPICassandra implements MyRetailPricingAPI {
    */
   @Override
   public PricingData getPricingData(Integer productId) {
-
+    checkNotNull(productId);
+    ResultSet resultSet = session.execute("SELECT * FROM myretail.pricing WHERE id = ?", productId);
+    Row row = resultSet.one();
+    if (row != null) {
+      BigDecimal value = row.getDecimal(VALUE);
+      if (value != null) {
+        String currencyCode = row.getString(CURRENCY_CODE);
+        if (currencyCode != null) {
+          return new PricingData(value, currencyCode);
+        }
+      }
+    }
     return null;
   }
 
