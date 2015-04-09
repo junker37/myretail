@@ -130,7 +130,7 @@ public class MyRetailAPIImplTest {
   @Test
   public void testGetProductInfo() throws Exception {
     ProductAPIResult productAPIResult = new MyRetailAPIImpl(dummyInfoAPI, dummyPricingAPI).getProduct(1);
-    ProductAPIResult actual = new ProductAPIResult(1, "This is my items name", new PricingData(new BigDecimal(10.49), "USD"));
-    Assert.assertEquals(productAPIResult, actual);
+    ProductAPIResult expected = new ProductAPIResult(1, "This is my items name", new PricingData(new BigDecimal(10.49), "USD"));
+    Assert.assertEquals(expected, productAPIResult);
   }
 }
