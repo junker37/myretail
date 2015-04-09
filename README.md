@@ -35,5 +35,18 @@ java -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.
 Open a browser to http://localhost:8080/products/v1/13860428 or, use curl
 ```
 curl http://localhost:8080/products/v1/13860428
+```
+Output
+```
 {"id":13860428,"name":"The Big Lebowski (Blu-ray) (Widescreen)","current_price":{"value":13.49,"currency_code":"USD"}}
+```
+
+### Updating Pricing Data
+```
+curl -H "Content-Type: application/json" -X PUT -d '{"value":12.99,"currency_code":"USD"}' http://localhost:8080/products/v1/13860428
+curl http://localhost:8080/products/v1/13860428
+```
+Output
+```
+{"id":13860428,"name":"The Big Lebowski (Blu-ray) (Widescreen)","current_price":{"value":12.99,"currency_code":"USD"}}
 ```
