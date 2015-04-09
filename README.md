@@ -20,6 +20,7 @@ java -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.
 ```
 
 ## Interacting
+This code uses DynamoDB as a key value store and comes packaged with [local DynamoDB](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html) with some data already in the store.
 Start local DynamoDB server
 ```
 cd dynamodb-local
