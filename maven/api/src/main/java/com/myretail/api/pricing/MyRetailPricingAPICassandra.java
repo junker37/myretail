@@ -39,7 +39,7 @@ public class MyRetailPricingAPICassandra implements MyRetailPricingAPI {
    */
   @Override
   public PricingData getPricingData(Integer productId) {
-    checkNotNull(productId);
+    checkNotNull(productId, "Product id is null");
     ResultSet resultSet = session.execute("SELECT * FROM myretail.pricing WHERE id = ?", productId);
     Row row = resultSet.one();
     if (row != null) {
@@ -61,8 +61,9 @@ public class MyRetailPricingAPICassandra implements MyRetailPricingAPI {
    */
   @Override
   public void updatePricingData(Integer productId, PricingData pricingData) {
-    // TODO Auto-generated method stub
-
+    checkNotNull(productId, "Product id is null");
+    checkNotNull(pricingData, "PricingData is null");
+    session.execute("UPDATE myretail.pricing SET value = ?, currency_code = ? WHERE id = ?", pricingData.value, pricingData.currencyCode, productId);
   }
 
 }
