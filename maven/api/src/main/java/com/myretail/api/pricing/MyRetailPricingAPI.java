@@ -22,4 +22,11 @@ public interface MyRetailPricingAPI {
    * @return the pricing data for the product
    */
   public PricingData getPricingData(Integer productId);
+
+  /**
+   * 
+   * @param productId the product id
+   * @param pricingData the new pricing data for the product
+   */
+  public void updatePricingData(Integer productId, PricingData pricingData);
 }

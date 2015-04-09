@@ -79,4 +79,14 @@ public class MyRetailPricingAPIDynamoDB implements MyRetailPricingAPI {
     return readPricingData(productId);
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.myretail.api.pricing.MyRetailPricingAPI#updatePricingData(java.lang.Integer, com.myretail.api.pricing.PricingData)
+   */
+  @Override
+  public void updatePricingData(Integer productId, PricingData pricingData) {
+
+  }
+
 }

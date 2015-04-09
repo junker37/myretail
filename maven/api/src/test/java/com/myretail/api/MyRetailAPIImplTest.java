@@ -78,6 +78,9 @@ public class MyRetailAPIImplTest {
       public PricingData getPricingData(Integer productId) {
         return new PricingData(new BigDecimal(10.49), "USD");
       }
+
+      @Override
+      public void updatePricingData(Integer productId, PricingData pricingData) {}
     };
   }
 
@@ -121,6 +124,9 @@ public class MyRetailAPIImplTest {
           } catch (InterruptedException e) {}
           return dummyPricingAPI.getPricingData(productId);
         }
+
+        @Override
+        public void updatePricingData(Integer productId, PricingData pricingData) {}
       }).getProduct(1);
     } catch (Exception e) {
       Assert.assertEquals("Timeout getting product info", e.getMessage());
