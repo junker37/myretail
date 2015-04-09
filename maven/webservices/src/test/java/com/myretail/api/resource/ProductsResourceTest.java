@@ -10,12 +10,18 @@
  */
 package com.myretail.api.resource;
 
-import static org.junit.Assert.*;
+import java.math.BigDecimal;
+import javax.xml.ws.WebServiceException;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import com.myretail.api.MyRetailAPI;
+import com.myretail.api.ProductAPIResult;
+import com.myretail.api.pricing.PricingData;
+
 
 /**
  * @author jeremy
@@ -35,11 +41,20 @@ public class ProductsResourceTest {
   @AfterClass
   public static void tearDownAfterClass() throws Exception {}
 
+  private MyRetailAPI dummyMyRetailAPI;
+
   /**
    * @throws java.lang.Exception
    */
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() throws Exception {
+    dummyMyRetailAPI = new MyRetailAPI() {
+      @Override
+      public ProductAPIResult getProduct(Integer id) throws Exception {
+        return new ProductAPIResult(id, "ProductsResourceTest Product Name", new PricingData(new BigDecimal(5.67), "USD"));
+      }
+    };
+  }
 
   /**
    * @throws java.lang.Exception
@@ -51,8 +66,21 @@ public class ProductsResourceTest {
    * Test method for {@link com.myretail.api.resource.ProductsResource#getProduct(java.lang.Integer)}.
    */
   @Test
-  public void testGetProduct() {
-    fail("Not yet implemented");
+  public void testGetProductNullId() {
+    try {
+      new ProductsResource(dummyMyRetailAPI).getProduct(null);
+    } catch (WebServiceException e) {
+      Assert.assertEquals("Product id is null", e.getCause().getMessage());
+    }
   }
 
+  /**
+   * Test method for {@link com.myretail.api.resource.ProductsResource#getProduct(java.lang.Integer)}.
+   */
+  @Test
+  public void testGetProduct() {
+    ProductAPIResult actual = new ProductsResource(dummyMyRetailAPI).getProduct(1);
+    ProductAPIResult expected = new ProductAPIResult(1, "ProductsResourceTest Product Name", new PricingData(new BigDecimal(5.67), "USD"));
+    Assert.assertEquals(expected, actual);
+  }
 }

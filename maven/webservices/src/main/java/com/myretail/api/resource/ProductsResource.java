@@ -43,7 +43,7 @@ public class ProductsResource {
   @Path("{id}")
   public ProductAPIResult getProduct(@PathParam("id") Integer id) {
     try {
-      return api.getProduct(id);
+      return api.getProduct(checkNotNull(id, "Product id is null"));
     } catch (Throwable t) {
       throw new WebServiceException(t);
     }
