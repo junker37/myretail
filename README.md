@@ -19,7 +19,7 @@ mvn clean package
 ```
 cd maven
 mvn clean package
-java -Daws.dynamodb.endpoint=http://localhost:8000 -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
+java -Dpricing.api.classname=com.myretail.api.pricing.MyRetailPricingAPIDynamoDB -Daws.dynamodb.endpoint=http://localhost:8000 -cp webservices/target/webservices-0.0.1-SNAPSHOT.jar com.myretail.api.app.MyRetailAPIApplication server
 ```
 
 ## Interacting Using DynamoDB
