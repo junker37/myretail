@@ -1,6 +1,8 @@
 # myRetail
 This code has a couple of endpoints.  One to get product info based on a product id, and another to updating pricing data for a product
+
 GET /products/v{version}/{id} - Returns product information, name from an internal APIl, and pricing data from a key-value store (dynamodb in this case).
+
 PUT /products/v{version}/{id} - Updates pricing data for the given product id.  Updates the data in the key-value store (dynamodb in this case).
 ## Testing
 Run the tests using maven
